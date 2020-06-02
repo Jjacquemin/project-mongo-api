@@ -1,15 +1,6 @@
+const userControllers = require('../controllers/user-controllers')
+
 module.exports = (server) => {
-
-  server.get('/bonjour', (req, res) => {
-    res.send({ result: 'Un résultat' })
-  })
-
-  server.get('/users', (req, res) => {
-    res.send({ users: 'Des users' })
-  })
-
-  server.get('/user/:id', (req, res) => {
-    res.send({ user: `User avec le id ${req.params.id}` })
-  })
-
+  server.get('/users', userControllers.getUsers)
+  server.get('/user/:id', userControllers.getUser)
 }
