@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 //Instantiation d'un schema MovieSchema constitué d'un titre obligatoire de type String 
 const MovieSchema = new Schema({
-  movie: {
+  title: {
     type: String,
     required: [true, 'Le titre est requis']
   },

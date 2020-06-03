@@ -1,4 +1,5 @@
 const User = require('../models/users')
+const Movie = require('../models/movies')
 
 module.exports = {
   readAll (req, res) {
@@ -14,8 +15,8 @@ module.exports = {
       })
   },
   create (req, res) {
-    const body = req.body
-    const userCreated = new User({ name: body.name, age: body.age })
+    const { name, age } = req.body
+    const userCreated = new User({ name, age })
     userCreated.save()
       .then(() => {
         res.send({ create: userCreated })
@@ -27,5 +28,35 @@ module.exports = {
     .then( user => {
       res.send({delete: user})
     })
-}
+  },
+  update (req, res) {
+    const { title, duration } = req.body
+    let movieCreated
+    let movieExist = false
+    Movie.findOne( { title })
+      .then( movie => {
+        if (movie) {
+          movieCreated = movie //new Movie({ _id: movie._id, title: movie.title, duration: movie.duration })
+          movieExit = true
+        } else {
+          movieCreated = new Movie({ title, duration })
+        }
+      })
+    User.findById(req.params.id)
+      .then( user => {
+        user.movies.push(movieCreated)
+        user.save()
+          .then( () => {
+            if (movieExist) {
+              res.send(user)
+            } else {
+              movieCreated.save()
+              .then( () => {
+                res.send(user)
+              })
+            }
+          })
+      })
+
+  }
 }
