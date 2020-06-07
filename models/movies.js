@@ -16,7 +16,7 @@ const MovieSchema = new Schema({
 })
 
 //Création d'un model de Movie basé sur le Schema précédemment défini.
-const Movie = mongoose.model('movie', MovieSchema)
+const Movie = mongoose.model('movie', MovieSchema, 'MOVIE_COLLECTION')
 
 //Export du model Movie pour pouvoir y accéder de l'exterieur.
 module.exports = Movie

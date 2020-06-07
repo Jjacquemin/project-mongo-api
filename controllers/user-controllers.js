@@ -58,5 +58,40 @@ module.exports = {
           })
       })
 
+  },
+  oldest (req, res) {
+    User.find().sort({ 'age': -1}).limit(1)
+      .then( users => {
+        res.send(users)
+      })
+  },
+  youngest (req, res) {
+    User.find().sort({ 'age': 1}).limit(1)
+      .then( users => {
+        res.send(users)
+      })
+  },
+  hasLongestMovie (req, res) {
+    User.aggregate([
+      { $unwind: "$movies" },
+      { $lookup: {
+        from: "MOVIE_COLLECTION",
+        localField: "movies",
+        foreignField: "_id",
+        as: "movieContent"
+        }
+      },
+      { $unwind: "$movieContent" },
+      { $sort: { "movieContent.duration":-1 } },
+      { $limit: 1 },
+      { $project: {
+        "user name": "$name", 
+        "movie title": "$movieContent.title", 
+        "movie duration": "$movieContent.duration"
+        }
+      }
+    ]).then( info => {
+      res.send(info)
+    })
   }
 }

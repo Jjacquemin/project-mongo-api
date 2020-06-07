@@ -35,7 +35,7 @@ UserSchema.pre('remove', function(next) {
 })
 
 //Création d'un model de User basé sur le Schema précédemment défini.
-const User = mongoose.model('user', UserSchema)
+const User = mongoose.model('user', UserSchema, 'USER_COLLECTION')
 
 //Export du model User pour pouvoir y accéder de l'exterieur.
 module.exports = User
